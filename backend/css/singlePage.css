@@ -1,0 +1,12 @@
+body {
+    background-color: lightblue;
+}
+
+.RedLabel{
+    color : red;
+}
+
+.PlaceHolder{
+    height: 700px;
+    background-color: lightgray;
+}

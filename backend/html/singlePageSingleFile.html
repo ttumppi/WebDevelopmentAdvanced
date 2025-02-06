@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+    <html lang="en">
+
+        <head>
+            <meta charset="utf-8">
+            
+            <title>Single Page!</title>
+
+            <style>
+                body {
+                    background-color: lightblue;
+                }
+                
+                .RedLabel{
+                    color : red;
+                }
+                
+                .PlaceHolder{
+                    height: 700px;
+                    background-color: lightgray;
+                }
+            </style>
+            
+
+            
+        </head>
+
+        <body>
+
+            <script>
+                const setLinksToHeaders = () => {
+
+                    document.getElementById("linkToHeader1").addEventListener("click", function() {
+                        document.getElementById("header2").scrollIntoView({behavior: "smooth"});
+                    });
+                
+                    
+                    document.getElementById("linkToHeader2").addEventListener("click", function() {
+                        document.getElementById("header1").scrollIntoView({behavior: "smooth"});
+                    });
+                }
+                
+                
+                window.onload = () => {
+                    const button = document.getElementById("fontButton");
+                
+                
+                
+                    button.onclick = () => {
+                
+                        const helloWorldText = document.getElementById("helloWorld");
+                
+                        if (helloWorldText.style.fontSize != "25px"){
+                            helloWorldText.style.fontSize = "25px";
+                        }
+                        else{
+                            helloWorldText.style.fontSize = "10px";
+                        }
+                
+                    }
+                
+                
+                    setLinksToHeaders();
+                }
+                
+                
+            </script>
+
+
+            <h1>Button to change the font of the text!</h1>
+
+           <div >
+            
+                <label id="helloWorld" class="RedLabel">This is a single page test!</label><br>
+
+                <button type="button" id="fontButton">Font Button</button>
+        
+
+
+            </div>
+
+            
+            <div id="header1">
+
+                <h1>Test header n0 1</h1>
+
+                <p>This is the place for the first text, and you can get from <a id="linkToHeader2" href="#header2">THIS </a> to the second header</p>
+            </div>
+
+
+            <div class="PlaceHolder"></div>
+            <div class="PlaceHolder"></div>
+            
+            <div id="header2">
+
+            <h1>Test header n0 2</h1>
+
+            <p>Second part of the website is here, and you can get from <a id="linkToHeader1" href="#header1">THIS </a> to the first header</p>
+            </div>
+            
+
+            
+        </body>
+    
+    </html>
