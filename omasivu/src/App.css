@@ -33,10 +33,27 @@
   }
 }
 
+
+
 .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
+}
+
+/*NonDefaultAttributes ---------------*/
+
+body {
+  background-color: lightblue;
+}
+
+.RedLabel{
+  color : red;
+}
+
+.PlaceHolder{
+  height: 700px;
+  background-color: lightgray;
 }
