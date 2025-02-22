@@ -29,18 +29,18 @@ Initialize();
 
 //DB actions below
 
-export const AddUser = (user) => {
+export const AddUser = async (user) => {
 
     
     if (!user.firstName || !user.lastName || !user.email){
         throw new Error("invalid query parameters");
     }
 
-    if (UserExists(user.email)){
+    if ((await UserExists(user.email))){
         return;
     }
 
-    db.run(insertUsersQ, [user.firstName, user.lastName, user.email], (error) => {
+    await db.run(insertUsersQ, [user.firstName, user.lastName, user.email], (error) => {
 
         if (error){
             throw new Error("Failed to insert user");
@@ -49,41 +49,46 @@ export const AddUser = (user) => {
     });
 }
 
-const UserExists = (email) => {
+const UserExists = async (email) => {
 
-    let qRow;
 
-    db.get(checkUserQ, [email], (error, row) => {
+    const qRow = await new Promise( (resolve, reject) => {
+        
+        db.get(checkUserQ, [email], (error, row) => {
 
-        if (error){
-            throw new Error("Something went wrong with querying user existence");
-        }
+            if (error){
+                reject(new Error("Something went wrong with querying user existence"));
+                return;
+            }
 
-        qRow = row;
+            resolve(row);
+        })
     });
 
-    return qRow.email == email;
+
+    return qRow && qRow.email == email;
 
 
 }
 
-export const GetAllUsers = () => {
+export const GetAllUsers = async () => {
 
-    let qRows;
-    db.all(GetUsersQ, [], (error, rows) => {
-        if (error){
-            throw new Error("Something went wrong with querying existing users");
-        }
+    const qRows = await new Promise((resolve, reject) => {
+        db.all(GetUsersQ, [], (error, rows) => {
+            if (error){
+                reject(new Error("Something went wrong with querying existing users"));
+            }
 
-        qRows = rows;
+            resolve(rows);
+        });
     });
 
     return qRows;
 }
 
-export const DeleteUser = (id) => {
+export const DeleteUser = async (id) => {
 
-    db.run(DeleteUserQ, [id], (error) => {
+    await db.run(DeleteUserQ, [id], (error) => {
 
         if (error){
             throw new Error("Something went wrong with deleting user");
@@ -91,13 +96,13 @@ export const DeleteUser = (id) => {
     })
 }
 
-export const UpdateUser = (id, user) => {
+export const UpdateUser = async (id, user) => {
 
-    if (!UserExists(user.email)){
+    if (!(await UserExists(user.email))){
         return;
     }
 
-    db.run(UpdateUserQ, [user.firstName, user.lastName, user.email, id],
+    await db.run(UpdateUserQ, [user.firstName, user.lastName, user.email, id],
         (error) => {
 
             if (error){
