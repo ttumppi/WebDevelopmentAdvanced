@@ -96,7 +96,7 @@ export const UpdateUser = (id, user) => {
     if (!UserExists(user.email)){
         return;
     }
-    
+
     db.run(UpdateUserQ, [user.firstName, user.lastName, user.email, id],
         (error) => {
 
