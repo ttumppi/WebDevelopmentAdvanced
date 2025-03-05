@@ -5,27 +5,46 @@ export const RegisterRoutes = (server) => {
 
 
     server.get("/", async (req, res) => {
-        const users = await dbHandler.GetAllUsers();
 
+        
+        try {
+            const users = await dbHandler.GetAllUsers();
+            res.json({users});
+        }
+        catch (error){
+            res.json({"error":"Action failed"})
+        }
 
-        res.render("homepage", {users});
+        
     });
 
     server.post("/adduser", async (req, res) => {
         const user = {firstName : req.body.first_name, lastName : req.body.last_name, email : req.body.email};
 
-        await dbHandler.AddUser(user);
+        console.log(user);
+
+        try{
+            await dbHandler.AddUser(user);
+        }
+        catch (error){
+            res.status(500).send();
+        }
 
 
-        res.redirect("/");
+        res.status(204).send();
     });
 
     server.post("/deleteuser/:id", async (req, res) => {
         const userID = req.params.id;
 
-        await dbHandler.DeleteUser(userID);
+        try{
+            await dbHandler.DeleteUser(userID);
+        }
+        catch{
+            res.status(500).send();
+        }
 
-        res.redirect("/");
+        res.status(204).send();
     })
 }
 

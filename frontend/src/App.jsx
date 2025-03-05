@@ -2,32 +2,54 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import {GetInputComponent} from "./Input.jsx"
+import {User} from "./User.js"
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email,setEmail] = useState("");
+
+  const submitInfo = async (e) => {
+
+    e.preventDefault()
+
+    let user = new User(firstName, lastName, email);
+
+    console.log(user)
+    try{
+      const response = await fetch("http://localhost:5000/adduser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      })
+      console.log(response)
+    }
+    catch(error){
+      console.log(error)
+    }
+    
+
+
+  }
 
   return (
     <>
+      <form onSubmit={submitInfo}>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <GetInputComponent label="First name" value={firstName} onChange={(e) => 
+          setFirstName(e.target.value)
+        } />
+        <GetInputComponent label="Last name" value={lastName} onChange={(e) => 
+        setLastName(e.target.value)}/>
+        <GetInputComponent label="Email" value={email} onChange={(e) => 
+        setEmail(e.target.value)}/>
+        <input type="submit"></input>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      </form>
     </>
   )
 }
