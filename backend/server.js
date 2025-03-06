@@ -1,6 +1,7 @@
 import express from "express"
 import path from "path"
 import { fileURLToPath } from "url"
+import cors from "cors"
 
 let server = null
 const PORT = 5000;
@@ -22,6 +23,7 @@ export const CreateServer = () => {
     server.use(express.static(path.join(__dirname, "public")));
     server.use(express.json());
     server.use(express.urlencoded({ extended: true }));
+    server.use(cors());
     
 
 

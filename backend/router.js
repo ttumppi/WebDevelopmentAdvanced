@@ -6,28 +6,33 @@ export const RegisterRoutes = (server) => {
 
     server.get("/", async (req, res) => {
 
-        
+        console.log("what");
         try {
             const users = await dbHandler.GetAllUsers();
+            console.log(users);
             res.json({users});
         }
         catch (error){
             res.json({"error":"Action failed"})
+            return;
         }
 
         
     });
 
     server.post("/adduser", async (req, res) => {
-        const user = {firstName : req.body.first_name, lastName : req.body.last_name, email : req.body.email};
+        console.log(req.body);
+        const user = {firstName : req.body.firstName, lastName : req.body.lastName, email : req.body.email};
 
         console.log(user);
 
         try{
             await dbHandler.AddUser(user);
+            
         }
         catch (error){
             res.status(500).send();
+            return;
         }
 
 
@@ -42,9 +47,11 @@ export const RegisterRoutes = (server) => {
         }
         catch{
             res.status(500).send();
+            return;
         }
 
         res.status(204).send();
+
     })
 }
 
