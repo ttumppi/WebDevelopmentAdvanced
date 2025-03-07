@@ -6,10 +6,8 @@ export const RegisterRoutes = (server) => {
 
     server.get("/", async (req, res) => {
 
-        console.log("what");
         try {
             const users = await dbHandler.GetAllUsers();
-            console.log(users);
             res.json({users});
         }
         catch (error){
@@ -21,10 +19,8 @@ export const RegisterRoutes = (server) => {
     });
 
     server.post("/adduser", async (req, res) => {
-        console.log(req.body);
         const user = {firstName : req.body.firstName, lastName : req.body.lastName, email : req.body.email};
 
-        console.log(user);
 
         try{
             await dbHandler.AddUser(user);
@@ -39,7 +35,7 @@ export const RegisterRoutes = (server) => {
         res.status(204).send();
     });
 
-    server.post("/deleteuser/:id", async (req, res) => {
+    server.delete("/deleteuser/:id", async (req, res) => {
         const userID = req.params.id;
 
         try{

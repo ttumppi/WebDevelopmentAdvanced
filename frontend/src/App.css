@@ -42,24 +42,31 @@
 }
 
 .input-label {
-  color:red
-}
-
-table{
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td{
-  border: 1px solid white;
+  color:black;
   padding: 8px;
-  text-align: left;
 }
 
-th {
-  background-color: blue;
+.input-field{
+  background-color: gray;
+  
+}
+
+.users-table{
+  border: 1px solid black;
+}
+
+.users-table th{
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.users-table td{
+  border: 1px solid black;
+  padding: 8px;
 }
 
 button {
   background-color: black;
+  padding: 8px;
 }
+

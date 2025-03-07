@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import {GetInputComponent} from "./Input.jsx"
+import {InputComponent} from "./Input.jsx"
 import {User} from "./User.js"
 import {UserTable} from "./UserTable.jsx"
-
+import "bootstrap/dist/css/bootstrap.min.css"
 
 
 
@@ -43,7 +43,7 @@ function App() {
 
   const DeleteUser = async (id) => {
     const response = await fetch(`http://localhost:5000/deleteuser/${id}`, {
-      method : "POST",
+      method : "DELETE",
       headers : {
         "Content-Type" : "application/json"
       },
@@ -92,21 +92,35 @@ function App() {
   console.log(users);
   return (
     <>
-      <form onSubmit={submitInfo}>
-      <div>
-        <UserTable users={users} onDelete={DeleteUser} />
+      <div className="container">
+        <div className="row">
+          <div>
+            <UserTable users={users} onDelete={DeleteUser} />
+          </div>
+        </div>
+
+        <div className="row">
+        <form onSubmit={submitInfo}>
+          <div className="row mb-3">
+            <InputComponent label="First name" value={firstName} onChange={(e) => 
+              setFirstName(e.target.value)
+            } />
+          </div>
+          <div className="row mb-3">
+            <InputComponent label="Last name" value={lastName} onChange={(e) => 
+            setLastName(e.target.value)}/>
+          </div>
+          <div className="row mb-3">
+            <InputComponent label="Email" value={email} onChange={(e) => 
+            setEmail(e.target.value)}/>
+          </div>
+            <input type="submit"></input>
+          </form>
+        </div>
       </div>
-      <div>
-        <GetInputComponent label="First name" value={firstName} onChange={(e) => 
-          setFirstName(e.target.value)
-        } />
-        <GetInputComponent label="Last name" value={lastName} onChange={(e) => 
-        setLastName(e.target.value)}/>
-        <GetInputComponent label="Email" value={email} onChange={(e) => 
-        setEmail(e.target.value)}/>
-        <input type="submit"></input>
-      </div>
-      </form>
+      
+      
+      
     </>
   )
 }

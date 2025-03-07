@@ -1,15 +1,16 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css"
 
 export const UserTable = ({users, onDelete}) => {
 
     return (
-        <table>
+        <table class="users-table">
             <thead>
                 <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
-                    <th></th>
+                    
                 </tr>
             </thead>
             
@@ -21,7 +22,7 @@ export const UserTable = ({users, onDelete}) => {
                     <td>{user.last_name}</td>
                     <td>{user.email}</td> 
                     <td>
-                        <button onClick={() => onDelete(user.id)}>Delete</button>
+                        <button className="btn btn-primary" onClick={() => onDelete(user.id)}>Delete</button>
                     </td>
                     </tr>
 
