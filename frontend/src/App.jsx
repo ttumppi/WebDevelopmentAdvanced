@@ -129,7 +129,7 @@ function App() {
               </div>
             
 
-              <input type="submit"></input>
+              <button type="submit" >Create</button>
             </form>
           </div>
         </div>
